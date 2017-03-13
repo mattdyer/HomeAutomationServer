@@ -31,5 +31,5 @@ def application(environ, start_response):
 	
 	return [content.encode('utf-8')]
 
-server = wsgiref.simple_server.make_server('', 8000, application)
+server = wsgiref.simple_server.make_server('', config['server']['port'], application)
 server.serve_forever()
