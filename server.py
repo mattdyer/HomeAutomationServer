@@ -18,7 +18,7 @@ def application(environ, start_response):
 	except IOError:
 		if (requestedPath[:7] == '/action'):
 			
-			hasactions.process_action(requestedPath[8:])
+			content = hasactions.process_action(requestedPath[8:])
 			
 		else:
 			status = '404 Not Found'
