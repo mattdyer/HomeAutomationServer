@@ -4,7 +4,7 @@ import mimetypes
 def application(environ, start_response):
 	
 	status = '200 OK'
-	requestedPath = environ['PATH_INFO']
+	requestedPath = '/html' + environ['PATH_INFO']
 	
 	content = ''
 	content_type = 'text/html'
