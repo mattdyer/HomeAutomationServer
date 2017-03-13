@@ -1,6 +1,9 @@
 import wsgiref.simple_server
 import mimetypes
 import hasactions
+import hasactions.config as configreader
+
+config = configreader.read_config()
 
 def application(environ, start_response):
 	
@@ -18,7 +21,7 @@ def application(environ, start_response):
 	except IOError:
 		if (requestedPath[:7] == '/action'):
 			
-			content = hasactions.process_action(requestedPath[8:])
+			content = hasactions.process_action(requestedPath[8:],config)
 			
 		else:
 			status = '404 Not Found'
