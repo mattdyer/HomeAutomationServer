@@ -1,20 +1,27 @@
 import wsgiref.simple_server
 import mimetypes
+import hasactions
 
 def application(environ, start_response):
 	
 	status = '200 OK'
-	requestedPath = '/html' + environ['PATH_INFO']
+	requestedPath = environ['PATH_INFO']
 	
 	content = ''
 	content_type = 'text/html'
 	
 	try:
-		file_content = open(requestedPath[1:])
+		htmlPath = '/html' + requestedPath
+		file_content = open(htmlPath[1:])
 		content = file_content.read()
-		content_type = mimetypes.guess_type(requestedPath[1:])[0]
+		content_type = mimetypes.guess_type(htmlPath[1:])[0]
 	except IOError:
-		status = '404 Not Found'
+		if (requestedPath[:7] == '/action'):
+			
+			hasactions.process_action(requestedPath[8:])
+			
+		else:
+			status = '404 Not Found'
 	
 	start_response(status,[('content-type', content_type + ';charset=utf-8')])
 	
